@@ -1,0 +1,11 @@
+services:
+  chatbot-app:
+    build: .
+    container_name: langchain_streamlit_chatbot
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    restart: always
