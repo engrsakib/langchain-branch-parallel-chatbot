@@ -5,7 +5,7 @@ services:
     build: .
     container_name: langchain_streamlit_chatbot
     ports:
-      - "8501:8501"
+      - "${DOCKER_CHATBOT_PORT_EXTERNAL}:${DOCKER_CHATBOT_PORT_INTERNAL}"
     env_file:
       - .env
     volumes:
