@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches:
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 # A new push to the same branch supersedes an in-flight run.
 concurrency:
