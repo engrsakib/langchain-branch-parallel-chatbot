@@ -113,53 +113,7 @@ langchain-branch-parallel-chatbot/
 
 ### Local setup
 
-**1. Clone the repository**
-
-```bash
-git clone https://github.com/engrsakib/langchain-branch-parallel-chatbot.git
-cd langchain-branch-parallel-chatbot
-```
-
-**2. Create and activate a virtual environment**
-
-```bash
-python -m venv .venv
-
-# macOS / Linux
-source .venv/bin/activate
-
-# Windows PowerShell
-.\.venv\Scripts\Activate.ps1
-```
-
-**3. Install dependencies**
-
-```bash
-pip install -r requirements.txt
-```
-
-**4. Configure your environment**
-
-```bash
-# macOS / Linux
-cp .env.example .env
-
-# Windows PowerShell
-Copy-Item .env.example .env
-```
-
-Open `.env` and set `GROQ_API_KEY` to your own key. Every other variable has a
-working default.
-
-**5. Run the app**
-
-```bash
-streamlit run app/main.py
-```
-
-Streamlit opens <http://localhost:8501> automatically. If configuration is
-missing the app still starts and tells you which variable is wrong, rather than
-crashing with a traceback.
+For a step-by-step Python workflow, see [Local setup without Docker](#local-setup-without-docker) below. If you prefer a containerized run, continue to the Docker section.
 
 ---
 
@@ -183,6 +137,59 @@ Stop the stack with `Ctrl+C`, or from another terminal:
 ```bash
 docker compose down
 ```
+
+### Local setup without Docker
+
+If you prefer to run the app directly on your machine, use the standard Python
+workflow below.
+
+**Step 1: Create a virtual environment**
+
+```bash
+python -m venv venv
+```
+
+**Step 2: Activate the virtual environment**
+
+```bash
+# Windows PowerShell
+.\venv\Scripts\Activate.ps1
+
+# Windows CMD
+.\venv\Scripts\activate.bat
+
+# macOS / Linux
+source venv/bin/activate
+```
+
+**Step 3: Install dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+**Step 4: Configure environment variables**
+
+```bash
+# macOS / Linux
+cp .env.example .env
+
+# Windows PowerShell
+Copy-Item .env.example .env
+
+# Windows CMD
+copy .env.example .env
+```
+
+Open `.env` and insert your `GROQ_API_KEY` value.
+
+**Step 5: Run the Streamlit application**
+
+```bash
+streamlit run app/main.py
+```
+
+Then open <http://localhost:8501> in your browser.
 
 ### Useful commands
 
@@ -208,24 +215,24 @@ docker compose down -v                # stop and remove volumes
   copied, so editing Python files does not reinstall the dependency tree.
 
 > **Port note:** the published port comes from `DOCKER_CHATBOT_PORT_EXTERNAL`,
-> which defaults to `8501`. If you set it to something else in `.env`, browse to
+> which defaults to `8502`. If you set it to something else in `.env`, browse to
 > that port instead.
 
 ---
 
 ## Environment variables
 
-| Variable                       | Required | Default                       | Purpose                                                    |
-| ------------------------------ | -------- | ----------------------------- | ---------------------------------------------------------- |
-| `GROQ_API_KEY`                 | Yes      | –                             | Groq API key. Held as a `SecretStr` and never rendered.     |
-| `GROQ_MODEL`                   | No       | `llama-3.3-70b-versatile`     | Answering model. Must support tool calling.                 |
-| `GROQ_ROUTER_MODEL`            | No       | `llama-3.1-8b-instant`        | Small model used only for classification.                   |
-| `GROQ_TEMPERATURE`             | No       | `0.3`                         | Answer temperature, 0.0–2.0. Routing is always 0.           |
-| `APP_NAME`                     | No       | `langchain-branch-parallel-chatbot` | Shown in the sidebar and browser tab.                 |
-| `APP_ENV`                      | No       | `development`                 | One of `development`, `staging`, `production`.              |
-| `LOG_LEVEL`                    | No       | `INFO`                        | `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL`.          |
-| `DOCKER_CHATBOT_PORT_INTERNAL` | No       | `8501`                        | Port Streamlit binds inside the container.                  |
-| `DOCKER_CHATBOT_PORT_EXTERNAL` | No       | `8501`                        | Port published on your machine.                             |
+| Variable                       | Required | Default                             | Purpose                                                 |
+| ------------------------------ | -------- | ----------------------------------- | ------------------------------------------------------- |
+| `GROQ_API_KEY`                 | Yes      | –                                   | Groq API key. Held as a `SecretStr` and never rendered. |
+| `GROQ_MODEL`                   | No       | `llama-3.3-70b-versatile`           | Answering model. Must support tool calling.             |
+| `GROQ_ROUTER_MODEL`            | No       | `llama-3.1-8b-instant`              | Small model used only for classification.               |
+| `GROQ_TEMPERATURE`             | No       | `0.3`                               | Answer temperature, 0.0–2.0. Routing is always 0.       |
+| `APP_NAME`                     | No       | `langchain-branch-parallel-chatbot` | Shown in the sidebar and browser tab.                   |
+| `APP_ENV`                      | No       | `development`                       | One of `development`, `staging`, `production`.          |
+| `LOG_LEVEL`                    | No       | `INFO`                              | `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL`.      |
+| `DOCKER_CHATBOT_PORT_INTERNAL` | No       | `8501`                              | Port Streamlit binds inside the container.              |
+| `DOCKER_CHATBOT_PORT_EXTERNAL` | No       | `8502`                              | Port published on your machine.                         |
 
 Invalid values fail fast: an unknown `LOG_LEVEL` or a non-numeric
 `GROQ_TEMPERATURE` is reported at startup with the offending variable named.
@@ -246,11 +253,11 @@ pytest --cov=app          # coverage, requires pytest-cov
 
 What is covered:
 
-| File               | Focus                                                              |
-| ------------------ | ------------------------------------------------------------------ |
-| `test_schemas.py`  | Request stripping and limits, confidence bounds, keyword dedup      |
-| `test_chains.py`   | Routing matrix, parallel stage, structured output, `get_chat_chain` |
-| `test_helpers.py`  | Input sanitising, badge formatting, session-state repair            |
+| File              | Focus                                                               |
+| ----------------- | ------------------------------------------------------------------- |
+| `test_schemas.py` | Request stripping and limits, confidence bounds, keyword dedup      |
+| `test_chains.py`  | Routing matrix, parallel stage, structured output, `get_chat_chain` |
+| `test_helpers.py` | Input sanitising, badge formatting, session-state repair            |
 
 Style is enforced with [Ruff](https://docs.astral.sh/ruff/):
 
