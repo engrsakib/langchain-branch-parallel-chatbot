@@ -1,3 +1,11 @@
+[project]
+name = "langchain-branch-parallel-chatbot"
+version = "0.1.0"
+description = "A Streamlit chatbot that routes questions through an LCEL branch and returns schema-validated answers."
+requires-python = ">=3.10"
+license = "GPL-3.0-only"
+authors = [{ name = "Md. Nazmus Sakib", email = "snazmussakib01@gmail.com" }]
+
 [tool.pytest.ini_options]
 # Tests import the `app` package, so the project root has to be importable.
 pythonpath = ["."]

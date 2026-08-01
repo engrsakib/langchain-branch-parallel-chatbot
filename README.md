@@ -8,7 +8,7 @@
 [![Pydantic](https://img.shields.io/badge/Pydantic-v2-E92063?logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
 [![Pytest](https://img.shields.io/badge/Pytest-passing-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
-[![License](https://img.shields.io/badge/License-Apache%202.0-D22128?logo=apache&logoColor=white)](LICENSE)
+[![License](https://img.shields.io/badge/License-GPL%20v3-A42E2B?logo=gnu&logoColor=white)](LICENSE)
 
 A production-grade Streamlit chatbot built on **LangChain Expression Language
 (LCEL)**, **Pydantic v2** and **Groq**. Every question is classified, routed to a
@@ -272,4 +272,9 @@ suite.
 
 ## License
 
-Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
+Copyright (C) 2026 Md. Nazmus Sakib (engrsakib).
+
+Licensed under the GNU General Public License v3.0 (`GPL-3.0-only`). This
+program is distributed without any warranty, and any derivative work you
+distribute must be released under the same license. See [LICENSE](LICENSE) for
+the full terms.
