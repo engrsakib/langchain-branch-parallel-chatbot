@@ -13,6 +13,7 @@ import streamlit as st
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 
 from app.schemas.response import ChatBotResponse
+from app.utils.helpers import state_list
 
 MESSAGES_KEY = "chat_messages"
 
@@ -41,7 +42,7 @@ def init_history() -> None:
 def get_history() -> list[ChatTurn]:
     """Return every turn in the current session, oldest first."""
     init_history()
-    return st.session_state[MESSAGES_KEY]
+    return state_list(st.session_state, MESSAGES_KEY, ChatTurn)
 
 
 def has_history() -> bool:

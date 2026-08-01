@@ -20,6 +20,7 @@ from app.core.config import Settings, get_settings  # noqa: E402
 from app.core.logger import get_logger  # noqa: E402
 from app.schemas.response import ChatBotResponse  # noqa: E402
 from app.services.chat_service import ChatService, ChatServiceError  # noqa: E402
+from app.utils.helpers import format_confidence, format_keyword_badges  # noqa: E402
 
 logger = get_logger(__name__)
 
@@ -99,13 +100,13 @@ def _render_metadata(response: ChatBotResponse) -> None:
             st.badge(response.category, color=CATEGORY_COLOURS.get(response.category, "gray"))
         with confidence_col:
             st.caption("Confidence")
-            st.progress(response.confidence, text=f"{response.confidence:.0%}")
+            st.progress(response.confidence, text=format_confidence(response.confidence))
 
         st.caption("Summary")
         st.info(response.summary)
 
         st.caption("Keywords")
-        st.markdown(" ".join(f":gray-background[{keyword}]" for keyword in response.keywords))
+        st.markdown(format_keyword_badges(response.keywords))
 
 
 def _render_turn(turn: memory.ChatTurn) -> None:

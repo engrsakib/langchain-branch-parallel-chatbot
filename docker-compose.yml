@@ -1,13 +1,26 @@
-version: '3.8'
-
+# `docker compose up --build` serves the app on http://localhost:8501
 services:
   chatbot-app:
     build: .
+    image: langchain-branch-parallel-chatbot:latest
     container_name: langchain_streamlit_chatbot
     ports:
-      - "${DOCKER_CHATBOT_PORT_EXTERNAL}:${DOCKER_CHATBOT_PORT_INTERNAL}"
+      - "${DOCKER_CHATBOT_PORT_EXTERNAL:-8501}:${DOCKER_CHATBOT_PORT_INTERNAL:-8501}"
     env_file:
       - .env
+    environment:
+      # Keeps the server, the published port and the health check in agreement.
+      STREAMLIT_SERVER_PORT: "${DOCKER_CHATBOT_PORT_INTERNAL:-8501}"
     volumes:
+      # Bind mount for local development: edits reload without a rebuild.
+      # Remove this line to run strictly the code baked into the image.
       - .:/app
-    restart: always
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -fsS "http://localhost:${DOCKER_CHATBOT_PORT_INTERNAL:-8501}/_stcore/health" || exit 1
+      interval: 30s
+      timeout: 5s
+      start_period: 25s
+      retries: 3
+    restart: unless-stopped

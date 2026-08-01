@@ -21,8 +21,9 @@ from pydantic import ValidationError
 
 from app.chatbot.chain import get_chat_chain
 from app.core.logger import get_logger
-from app.schemas.request import ChatRequest
+from app.schemas.request import MAX_QUERY_LENGTH, ChatRequest
 from app.schemas.response import ChatBotResponse
+from app.utils.helpers import sanitize_query
 
 logger = get_logger(__name__)
 
@@ -94,7 +95,7 @@ class ChatService:
         if isinstance(query, ChatRequest):
             return query
         try:
-            return ChatRequest(query=query)
+            return ChatRequest(query=sanitize_query(query, max_length=MAX_QUERY_LENGTH))
         except ValidationError as exc:
             logger.debug("Rejected an invalid query: %s", exc)
             raise ChatServiceError("Please enter a question before sending.") from exc

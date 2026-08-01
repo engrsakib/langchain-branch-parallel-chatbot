@@ -53,8 +53,7 @@ class ChatBotResponse(BaseModel):
         ...,
         min_length=1,
         description=(
-            "The topic category of the question, such as 'Programming', 'Math', "
-            "or 'General'."
+            "The topic category of the question, such as 'Programming', 'Math', or 'General'."
         ),
     )
     keywords: list[str] = Field(

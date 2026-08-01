@@ -25,6 +25,7 @@ wheels/
 *.egg
 
 # Virtual Environment
+.venv/
 venv/
 ENV/
 env/
@@ -35,8 +36,9 @@ env/
 *.swp
 *.swo
 
-# Testing & Coverage
+# Testing, Coverage & Linting
 .pytest_cache/
+.ruff_cache/
 .coverage
 htmlcov/
 
