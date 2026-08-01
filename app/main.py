@@ -32,9 +32,16 @@ APP_TAGLINE = (
 EXAMPLE_QUESTIONS = [
     "Why does my for loop skip the last item?",
     "What is the derivative of x^3 * ln(x)?",
+    "Solve (1 + i)z = (2 + 2i, 4) for the complex vector z.",
+    "A 2 kg block slides down a frictionless 30 degree incline. What is its acceleration?",
+    "Balance the combustion of propane and explain each step.",
     "Who wrote the novel Dune?",
 ]
 CATEGORY_COLOURS = {"Programming": "violet", "Math": "blue", "General": "green"}
+
+# An example click cannot fill st.chat_input directly, so the question is parked
+# here and picked up on the rerun that the click triggers.
+PENDING_PROMPT_KEY = "pending_prompt"
 
 
 @st.cache_resource(show_spinner=False)
@@ -124,10 +131,16 @@ def _render_history() -> None:
         _render_turn(turn)
 
 
-def _render_empty_state() -> None:
+def _render_empty_state() -> str | None:
+    """Show the example questions as buttons, returning one if it was clicked."""
     st.caption("Try asking:")
-    for question in EXAMPLE_QUESTIONS:
-        st.caption(f"- {question}")
+    columns = st.columns(2)
+    clicked: str | None = None
+    for index, question in enumerate(EXAMPLE_QUESTIONS):
+        column = columns[index % len(columns)]
+        if column.button(question, key=f"example-{index}", width="stretch", type="tertiary"):
+            clicked = question
+    return clicked
 
 
 def _handle_prompt(prompt: str) -> None:
@@ -177,13 +190,24 @@ def main() -> None:
 
     _render_sidebar(settings)
 
-    if not memory.has_history():
-        _render_empty_state()
+    pending = st.session_state.pop(PENDING_PROMPT_KEY, None)
+
+    # Hide the examples once a question is on its way, so the conversation is
+    # the only thing on screen from the very first answer.
+    if not memory.has_history() and not pending:
+        example = _render_empty_state()
+        if example:
+            st.session_state[PENDING_PROMPT_KEY] = example
+            st.rerun()
+
     _render_history()
 
-    prompt = st.chat_input("Ask about code, maths, or anything else")
+    prompt = st.chat_input("Ask about code, maths, science, or anything else") or pending
     if prompt:
         _handle_prompt(prompt)
+        # The sidebar was drawn before this turn existed, so its message count and
+        # the Clear chat button would stay a turn behind without another pass.
+        st.rerun()
 
 
 main()

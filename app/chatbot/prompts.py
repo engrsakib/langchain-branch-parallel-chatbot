@@ -38,6 +38,9 @@ Asking you to write, fix, or explain code is Programming even when the subject
 matter is mathematical. Asking you to compute, solve, or prove something is Math
 even when it arises from a programming task.
 
+Questions arrive in any language. Classify them the same way regardless, and
+always answer with the English category word.
+
 Reply with exactly one word, chosen from: Programming, Math, General.
 Do not explain your choice, add punctuation, or write anything else."""
 
@@ -68,9 +71,13 @@ no settled answer rather than guessing."""
 def _output_contract(category: Category) -> str:
     """Field-by-field instructions appended to each specialist system prompt."""
     return (
+        "Reply in the same language the user wrote their latest message in. If they "
+        "write in Bangla, answer in Bangla; if they switch language, switch with them. "
+        "Keep code, formulas, chemical symbols and proper nouns in their standard "
+        "form whatever the language.\n\n"
         "Fill in every field of the required response format:\n"
-        "- answer: your complete reply to the user\n"
-        "- summary: one or two sentences capturing that reply\n"
+        "- answer: your complete reply to the user, in that language\n"
+        "- summary: one or two sentences capturing that reply, in that same language\n"
         "- confidence: how sure you are, from 0.0 to 1.0. Reserve values above "
         "0.95 for things you could verify from memory with no doubt at all; use "
         "0.7 to 0.9 when confident but working from judgement, and lower still "
