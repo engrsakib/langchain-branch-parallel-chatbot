@@ -75,30 +75,49 @@ Full technical detail lives in [`docs/architecture.md`](docs/architecture.md).
 
 ```text
 langchain-branch-parallel-chatbot/
-│
+├── .dockerignore
+├── .env.example
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── .gitignore
+├── Dockerfile
+├── LICENSE
+├── README.md
 ├── app/
-│   ├── core/
-│   │   ├── config.py          # Pydantic Settings loaded from .env
-│   │   └── logger.py          # Centralised console logging
-│   ├── schemas/
-│   │   ├── request.py         # ChatRequest: inbound validation
-│   │   └── response.py        # ChatBotResponse: the structured output contract
+│   ├── __init__.py
+│   ├── main.py
 │   ├── chatbot/
-│   │   ├── prompts.py         # Router prompt + three specialist personas
-│   │   ├── chain.py           # The LCEL pipeline
-│   │   └── memory.py          # Per-session history in st.session_state
+│   │   ├── __init__.py
+│   │   ├── chain.py
+│   │   ├── memory.py
+│   │   └── prompts.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── logger.py
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── request.py
+│   │   └── response.py
 │   ├── services/
-│   │   └── chat_service.py    # Orchestration and error translation
+│   │   ├── __init__.py
+│   │   └── chat_service.py
 │   ├── utils/
-│   │   └── helpers.py         # Sanitising, formatting, session-state repair
-│   └── main.py                # Streamlit entrypoint
-│
-├── tests/                     # pytest suite, no network access required
-├── docs/architecture.md       # System architecture
-├── .github/workflows/ci.yml   # Lint, format check and tests
-├── Dockerfile                 # Container image
-├── docker-compose.yml         # One-command local stack
-└── requirements.txt           # Pinned dependencies
+│   │   ├── __init__.py
+│   │   └── helpers.py
+├── assets/
+├── docker-compose.yml
+├── docs/
+│   ├── api.md
+│   └── architecture.md
+├── pyproject.toml
+├── requirements.txt
+└── tests/
+    ├── conftest.py
+    ├── test_chains.py
+    ├── test_helpers.py
+    └── test_schemas.py
 ```
 
 ---
