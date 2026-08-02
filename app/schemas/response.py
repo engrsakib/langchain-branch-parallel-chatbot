@@ -37,6 +37,13 @@ class ChatBotResponse(BaseModel):
         description="Three to six keywords describing the topic of the question.",
     )
 
+    @field_validator("keywords", mode="before")
+    @classmethod
+    def _coerce_keywords(cls, keywords):
+        if isinstance(keywords, str):
+            keywords = [part.strip() for part in keywords.split(",")]
+        return keywords
+
     @field_validator("keywords")
     @classmethod
     def _drop_blank_and_duplicate_keywords(cls, keywords: list[str]) -> list[str]:

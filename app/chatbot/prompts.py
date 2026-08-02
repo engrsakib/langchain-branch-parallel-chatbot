@@ -74,7 +74,9 @@ def _output_contract(category: Category) -> str:
         "0.7 to 0.9 when confident but working from judgement, and lower still "
         "when the question is ambiguous or your answer is partly guesswork\n"
         f"- category: exactly {category}\n"
-        "- keywords: three to six short topical keywords"
+        "- keywords: three to six short topical keywords. Ensure the 'keywords' "
+        "field is always output as a valid JSON array of strings (e.g., ['math', "
+        "'equations']), never a single string."
     )
 
 

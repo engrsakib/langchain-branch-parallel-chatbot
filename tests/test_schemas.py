@@ -80,6 +80,14 @@ class TestChatBotResponseConfidence:
 
 
 class TestChatBotResponseKeywords:
+    def test_coerces_a_single_string_into_one_keyword(self):
+        response = build_response(keywords="math")
+        assert response.keywords == ["math"]
+
+    def test_coerces_a_comma_separated_string_into_keywords(self):
+        response = build_response(keywords="math, equations, proofs")
+        assert response.keywords == ["math", "equations", "proofs"]
+
     def test_deduplicates_ignoring_case(self):
         response = build_response(keywords=["Python", "python", "PYTHON", "lists"])
         assert response.keywords == ["Python", "lists"]
