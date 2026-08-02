@@ -2,21 +2,19 @@
 import sys
 from pathlib import Path
 
-                                                                                 
-                                                                       
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-import streamlit as st              
-from pydantic import ValidationError              
+import streamlit as st  # noqa: E402
+from pydantic import ValidationError  # noqa: E402
 
-from app.chatbot import memory              
-from app.core.config import Settings, get_settings              
-from app.core.logger import get_logger              
-from app.schemas.response import ChatBotResponse              
-from app.services.chat_service import ChatService, ChatServiceError              
-from app.utils.helpers import format_confidence, format_keyword_badges              
+from app.chatbot import memory  # noqa: E402
+from app.core.config import Settings, get_settings  # noqa: E402
+from app.core.logger import get_logger  # noqa: E402
+from app.schemas.response import ChatBotResponse  # noqa: E402
+from app.services.chat_service import ChatService, ChatServiceError  # noqa: E402
+from app.utils.helpers import format_confidence, format_keyword_badges  # noqa: E402
 
 logger = get_logger(__name__)
 
@@ -35,8 +33,6 @@ EXAMPLE_QUESTIONS = [
 ]
 CATEGORY_COLOURS = {"Programming": "violet", "Math": "blue", "General": "green"}
 
-                                                                                
-                                                          
 PENDING_PROMPT_KEY = "pending_prompt"
 
 
@@ -136,7 +132,6 @@ def _render_empty_state() -> str | None:
 
 
 def _handle_prompt(prompt: str) -> None:
-                                                                             
     history = memory.get_langchain_history()
     memory.add_user_message(prompt)
     with st.chat_message("user"):
@@ -184,8 +179,6 @@ def main() -> None:
 
     pending = st.session_state.pop(PENDING_PROMPT_KEY, None)
 
-                                                                             
-                                                          
     if not memory.has_history() and not pending:
         example = _render_empty_state()
         if example:
@@ -197,9 +190,8 @@ def main() -> None:
     prompt = st.chat_input("Ask about code, maths, science, or anything else") or pending
     if prompt:
         _handle_prompt(prompt)
-                                                                                  
-                                                                              
         st.rerun()
 
 
-main()
+if __name__ == "__main__":
+    main()

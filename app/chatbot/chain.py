@@ -30,8 +30,8 @@ from app.schemas.response import ChatBotResponse
 
 logger = get_logger(__name__)
 
-                                                                               
-                                  
+
+
 ChainInput = str | ChatRequest | dict[str, Any]
 
 

@@ -68,7 +68,7 @@ class ChatService:
                 f"Groq returned an error (HTTP {exc.status_code}). Please try again."
             ) from exc
         except ValidationError as exc:
-                                                                                   
+
             logger.warning("Model output failed ChatBotResponse validation: %s", exc)
             raise ChatServiceError(
                 "The model's reply did not match the expected format. Please try again."

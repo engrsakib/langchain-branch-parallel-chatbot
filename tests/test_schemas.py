@@ -143,7 +143,6 @@ class TestStructuredOutputSchema:
         confidence = ChatBotResponse.model_json_schema()["properties"]["confidence"]
         assert (confidence["minimum"], confidence["maximum"]) == (0.0, 1.0)
 
-    def test_class_docstring_is_addressed_to_the_model(self):
-                                                                                          
-        description = ChatBotResponse.model_json_schema()["description"]
-        assert "developer" not in description.lower()
+    def test_schema_does_not_depend_on_a_class_docstring(self):
+        schema = ChatBotResponse.model_json_schema()
+        assert schema.get("description") is None

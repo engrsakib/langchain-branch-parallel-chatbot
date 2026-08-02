@@ -175,7 +175,7 @@ class TestStructuredOutput:
         assert answer_llm.structured_schema is ChatBotResponse
 
     def test_the_router_category_overrides_the_model_answer(self, make_chain, sample_response):
-                                                                   
+
         confused = sample_response.model_copy(update={"category": "General"})
         chain, _, _ = make_chain(router_reply=MATH, response=confused)
 
@@ -236,4 +236,4 @@ class TestGetChatChain:
             second = get_chat_chain()
 
         assert first is second
-        assert chat_groq.call_count == 2                                      
+        assert chat_groq.call_count == 2

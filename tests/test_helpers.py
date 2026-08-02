@@ -85,7 +85,7 @@ class TestStateList:
         assert state_list(state, "items", Item) == [item]
 
     def test_discards_entries_of_the_wrong_type(self):
-                                                                                 
+
         item = Item()
         state = {"items": [item, "not an item", 7]}
         assert state_list(state, "items", Item) == [item]

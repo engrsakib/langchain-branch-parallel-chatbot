@@ -3,25 +3,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class ChatBotResponse(BaseModel):
-
-    model_config = ConfigDict(
-        str_strip_whitespace=True,
-        json_schema_extra={
-            "description": "A complete, structured answer to a single user question.",
-            "examples": [
-                {
-                    "answer": (
-                        "A Python list is mutable and written with square brackets, "
-                        "while a tuple is immutable and written with parentheses."
-                    ),
-                    "summary": "Lists can be changed after creation; tuples cannot.",
-                    "confidence": 0.95,
-                    "category": "Programming",
-                    "keywords": ["python", "list", "tuple", "mutability"],
-                }
-            ]
-        },
-    )
+    model_config = ConfigDict(str_strip_whitespace=True)
 
     answer: str = Field(
         ...,

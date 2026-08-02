@@ -10,7 +10,7 @@ from app.utils.helpers import state_list
 
 MESSAGES_KEY = "chat_messages"
 
-                                                                             
+
 MAX_HISTORY_MESSAGES = 10
 
 Role = Literal["user", "assistant"]
