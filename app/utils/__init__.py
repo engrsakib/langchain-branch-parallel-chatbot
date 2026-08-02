@@ -1,4 +1,3 @@
-
 from app.utils.helpers import (
     format_confidence,
     format_keyword_badges,

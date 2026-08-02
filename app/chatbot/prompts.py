@@ -1,4 +1,3 @@
-
 from typing import Literal
 
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -92,7 +91,6 @@ def _build_assistant_prompt(category: Category, system_prompt: str) -> ChatPromp
 ROUTER_PROMPT = ChatPromptTemplate.from_messages(
     [
         ("system", ROUTER_SYSTEM_PROMPT),
-
         MessagesPlaceholder("history", optional=True),
         ("human", "{query}"),
     ]

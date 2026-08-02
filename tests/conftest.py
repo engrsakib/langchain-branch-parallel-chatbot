@@ -1,4 +1,3 @@
-
 import pytest
 from langchain_core.prompt_values import ChatPromptValue
 from langchain_core.runnables import RunnableLambda
@@ -39,7 +38,6 @@ def sample_response() -> ChatBotResponse:
 
 
 class RecordingRouter:
-
     def __init__(self, reply: str) -> None:
         self.reply = reply
         self.calls: list[ChatPromptValue] = []
@@ -55,7 +53,6 @@ class RecordingRouter:
 
 
 class RecordingAnswerLLM:
-
     def __init__(self, response: ChatBotResponse) -> None:
         self.response = response
         self.calls: list[ChatPromptValue] = []

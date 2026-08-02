@@ -1,4 +1,3 @@
-
 import pytest
 from pydantic import ValidationError
 
@@ -129,7 +128,6 @@ class TestChatBotResponseText:
 
 
 class TestStructuredOutputSchema:
-
     def test_every_field_carries_a_description(self):
         properties = ChatBotResponse.model_json_schema()["properties"]
         missing = [name for name, spec in properties.items() if not spec.get("description")]

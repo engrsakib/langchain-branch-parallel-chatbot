@@ -1,4 +1,3 @@
-
 import asyncio
 from unittest.mock import MagicMock, patch
 
@@ -193,7 +192,6 @@ class TestStructuredOutput:
 
 
 class TestGetChatChain:
-
     def test_builds_both_models_from_settings(self, settings):
         with patch("app.chatbot.chain.ChatGroq") as chat_groq:
             chat_groq.return_value = MagicMock()

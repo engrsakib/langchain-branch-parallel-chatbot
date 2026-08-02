@@ -1,4 +1,3 @@
-
 import logging
 import sys
 
@@ -18,8 +17,6 @@ def _resolve_level(level: str | None) -> str:
     try:
         return get_settings().LOG_LEVEL
     except ValidationError:
-
-
         return "INFO"
 
 

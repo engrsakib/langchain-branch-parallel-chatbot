@@ -1,4 +1,3 @@
-
 from collections.abc import Sequence
 
 from groq import (
@@ -27,7 +26,6 @@ class ChatServiceError(RuntimeError):
 
 
 class ChatService:
-
     def __init__(self, chain: Runnable | None = None) -> None:
         self._chain = chain if chain is not None else get_chat_chain()
 
@@ -68,7 +66,6 @@ class ChatService:
                 f"Groq returned an error (HTTP {exc.status_code}). Please try again."
             ) from exc
         except ValidationError as exc:
-
             logger.warning("Model output failed ChatBotResponse validation: %s", exc)
             raise ChatServiceError(
                 "The model's reply did not match the expected format. Please try again."

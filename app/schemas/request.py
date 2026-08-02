@@ -1,11 +1,9 @@
-
 from pydantic import BaseModel, ConfigDict, Field
 
 MAX_QUERY_LENGTH = 4000
 
 
 class ChatRequest(BaseModel):
-
     model_config = ConfigDict(
         str_strip_whitespace=True,
         extra="forbid",

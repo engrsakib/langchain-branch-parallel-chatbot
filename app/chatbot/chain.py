@@ -1,4 +1,3 @@
-
 from functools import lru_cache
 from operator import itemgetter
 from typing import Any
@@ -29,7 +28,6 @@ from app.schemas.request import ChatRequest
 from app.schemas.response import ChatBotResponse
 
 logger = get_logger(__name__)
-
 
 
 ChainInput = str | ChatRequest | dict[str, Any]

@@ -1,10 +1,8 @@
-
 import re
 from collections.abc import Iterable, MutableMapping
 from typing import Any, TypeVar
 
 T = TypeVar("T")
-
 
 
 _CONTROL_CHARACTERS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
