@@ -210,4 +210,5 @@ def main() -> None:
         st.rerun()
 
 
-main()
+if __name__ == "__main__":
+    main()

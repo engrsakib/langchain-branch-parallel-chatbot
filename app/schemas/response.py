@@ -1,33 +1,11 @@
-"""Structured output schema produced by the LLM (FR-3).
-
-``ChatBotResponse`` is handed to the LLM via structured output, which means its
-class docstring and every field ``description`` are serialised into the JSON
-schema the model reads as instructions. Keep that text addressed to the model;
-notes for other developers belong here in the module docstring instead.
-"""
+"""Structured output schema produced by the LLM (FR-3)."""
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class ChatBotResponse(BaseModel):
-    """A complete, structured answer to a single user question."""
-
     model_config = ConfigDict(
         str_strip_whitespace=True,
-        json_schema_extra={
-            "examples": [
-                {
-                    "answer": (
-                        "A Python list is mutable and written with square brackets, "
-                        "while a tuple is immutable and written with parentheses."
-                    ),
-                    "summary": "Lists can be changed after creation; tuples cannot.",
-                    "confidence": 0.95,
-                    "category": "Programming",
-                    "keywords": ["python", "list", "tuple", "mutability"],
-                }
-            ]
-        },
     )
 
     answer: str = Field(

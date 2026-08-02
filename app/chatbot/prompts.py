@@ -8,7 +8,10 @@ placeholders below are ``{query}`` and the optional ``history`` messages.
 
 from typing import Literal
 
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder   # pyright: ignore[reportMissingImports]
+from langchain_core.prompts import (  # pyright: ignore[reportMissingImports]
+    ChatPromptTemplate,
+    MessagesPlaceholder,
+)
 
 Category = Literal["Programming", "Math", "General"]
 
