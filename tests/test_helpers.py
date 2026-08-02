@@ -1,4 +1,3 @@
-"""Tests for the shared helper utilities."""
 
 import pytest
 
@@ -86,7 +85,7 @@ class TestStateList:
         assert state_list(state, "items", Item) == [item]
 
     def test_discards_entries_of_the_wrong_type(self):
-        # A Streamlit hot reload can leave stale objects behind in session state.
+                                                                                 
         item = Item()
         state = {"items": [item, "not an item", 7]}
         assert state_list(state, "items", Item) == [item]

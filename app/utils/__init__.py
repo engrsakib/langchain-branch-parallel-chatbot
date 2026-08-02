@@ -1,4 +1,3 @@
-"""Shared helper utilities."""
 
 from app.utils.helpers import (
     format_confidence,

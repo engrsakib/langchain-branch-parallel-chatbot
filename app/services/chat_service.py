@@ -1,9 +1,3 @@
-"""Orchestration layer between the UI and the LCEL chain.
-
-The UI should never see a LangChain or Groq exception. Everything raised out of
-this module is a ``ChatServiceError`` whose message is safe to render verbatim,
-with the underlying failure logged for whoever is reading the logs.
-"""
 
 from collections.abc import Sequence
 
@@ -29,11 +23,10 @@ logger = get_logger(__name__)
 
 
 class ChatServiceError(RuntimeError):
-    """A failure with a message intended for the person using the app."""
+    pass
 
 
 class ChatService:
-    """Runs one user turn through the chain and normalises the failure modes."""
 
     def __init__(self, chain: Runnable | None = None) -> None:
         self._chain = chain if chain is not None else get_chat_chain()
@@ -43,7 +36,6 @@ class ChatService:
         query: str | ChatRequest,
         history: Sequence[BaseMessage] | None = None,
     ) -> ChatBotResponse:
-        """Answer one question, raising ChatServiceError if anything goes wrong."""
         request = self._validate(query)
         payload = {"query": request.query, "history": list(history or [])}
 
@@ -76,7 +68,7 @@ class ChatService:
                 f"Groq returned an error (HTTP {exc.status_code}). Please try again."
             ) from exc
         except ValidationError as exc:
-            # The model answered, but its structured output did not fit the schema.
+                                                                                   
             logger.warning("Model output failed ChatBotResponse validation: %s", exc)
             raise ChatServiceError(
                 "The model's reply did not match the expected format. Please try again."

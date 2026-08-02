@@ -1,4 +1,3 @@
-"""Tests for the Pydantic data contract (FR-3)."""
 
 import pytest
 from pydantic import ValidationError
@@ -130,7 +129,6 @@ class TestChatBotResponseText:
 
 
 class TestStructuredOutputSchema:
-    """The JSON schema is the prompt the LLM sees, so its content is load-bearing."""
 
     def test_every_field_carries_a_description(self):
         properties = ChatBotResponse.model_json_schema()["properties"]
@@ -146,6 +144,6 @@ class TestStructuredOutputSchema:
         assert (confidence["minimum"], confidence["maximum"]) == (0.0, 1.0)
 
     def test_class_docstring_is_addressed_to_the_model(self):
-        # This description is sent to the LLM, so it must not contain notes to developers.
+                                                                                          
         description = ChatBotResponse.model_json_schema()["description"]
         assert "developer" not in description.lower()

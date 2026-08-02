@@ -1,9 +1,3 @@
-"""Shared fixtures and fake models.
-
-No test in this suite may reach the network, so every chain is built with
-injected fakes and settings come from environment variables rather than a
-developer's local .env file.
-"""
 
 import pytest
 from langchain_core.prompt_values import ChatPromptValue
@@ -16,7 +10,6 @@ from app.schemas.response import ChatBotResponse
 
 @pytest.fixture(autouse=True)
 def isolated_settings(monkeypatch):
-    """Give every test the same settings, independent of any local .env."""
     monkeypatch.setenv("GROQ_API_KEY", "test-key")
     monkeypatch.setenv("GROQ_MODEL", "test-answer-model")
     monkeypatch.setenv("GROQ_ROUTER_MODEL", "test-router-model")
@@ -46,7 +39,6 @@ def sample_response() -> ChatBotResponse:
 
 
 class RecordingRouter:
-    """A stand-in chat model that always returns the same category word."""
 
     def __init__(self, reply: str) -> None:
         self.reply = reply
@@ -63,7 +55,6 @@ class RecordingRouter:
 
 
 class RecordingAnswerLLM:
-    """Duck-types the only method the chain calls on the answering model."""
 
     def __init__(self, response: ChatBotResponse) -> None:
         self.response = response

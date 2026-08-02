@@ -1,26 +1,22 @@
-"""Streamlit chat interface (FR-6).
-
-Run with ``streamlit run app/main.py`` from the project root.
-"""
 
 import sys
 from pathlib import Path
 
-# Streamlit puts the script's own directory on sys.path, not the project root, so
-# `app.*` has to be made importable before any of it is imported below.
+                                                                                 
+                                                                       
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-import streamlit as st  # noqa: E402
-from pydantic import ValidationError  # noqa: E402
+import streamlit as st              
+from pydantic import ValidationError              
 
-from app.chatbot import memory  # noqa: E402
-from app.core.config import Settings, get_settings  # noqa: E402
-from app.core.logger import get_logger  # noqa: E402
-from app.schemas.response import ChatBotResponse  # noqa: E402
-from app.services.chat_service import ChatService, ChatServiceError  # noqa: E402
-from app.utils.helpers import format_confidence, format_keyword_badges  # noqa: E402
+from app.chatbot import memory              
+from app.core.config import Settings, get_settings              
+from app.core.logger import get_logger              
+from app.schemas.response import ChatBotResponse              
+from app.services.chat_service import ChatService, ChatServiceError              
+from app.utils.helpers import format_confidence, format_keyword_badges              
 
 logger = get_logger(__name__)
 
@@ -39,19 +35,17 @@ EXAMPLE_QUESTIONS = [
 ]
 CATEGORY_COLOURS = {"Programming": "violet", "Math": "blue", "General": "green"}
 
-# An example click cannot fill st.chat_input directly, so the question is parked
-# here and picked up on the rerun that the click triggers.
+                                                                                
+                                                          
 PENDING_PROMPT_KEY = "pending_prompt"
 
 
 @st.cache_resource(show_spinner=False)
 def load_service() -> ChatService:
-    """Build the chat service once per process rather than on every rerun."""
     return ChatService()
 
 
 def _load_settings() -> tuple[Settings | None, ValidationError | None]:
-    """Load settings without touching Streamlit, which cannot run before page config."""
     try:
         return get_settings(), None
     except ValidationError as exc:
@@ -99,7 +93,6 @@ def _render_sidebar(settings: Settings) -> None:
 
 
 def _render_metadata(response: ChatBotResponse) -> None:
-    """Show the structured fields that accompany the answer."""
     with st.expander("Response details", expanded=False):
         category_col, confidence_col = st.columns([1, 2], vertical_alignment="center")
         with category_col:
@@ -132,7 +125,6 @@ def _render_history() -> None:
 
 
 def _render_empty_state() -> str | None:
-    """Show the example questions as buttons, returning one if it was clicked."""
     st.caption("Try asking:")
     columns = st.columns(2)
     clicked: str | None = None
@@ -144,7 +136,7 @@ def _render_empty_state() -> str | None:
 
 
 def _handle_prompt(prompt: str) -> None:
-    # Read history before recording this turn, or the question arrives twice.
+                                                                             
     history = memory.get_langchain_history()
     memory.add_user_message(prompt)
     with st.chat_message("user"):
@@ -192,8 +184,8 @@ def main() -> None:
 
     pending = st.session_state.pop(PENDING_PROMPT_KEY, None)
 
-    # Hide the examples once a question is on its way, so the conversation is
-    # the only thing on screen from the very first answer.
+                                                                             
+                                                          
     if not memory.has_history() and not pending:
         example = _render_empty_state()
         if example:
@@ -205,8 +197,8 @@ def main() -> None:
     prompt = st.chat_input("Ask about code, maths, science, or anything else") or pending
     if prompt:
         _handle_prompt(prompt)
-        # The sidebar was drawn before this turn existed, so its message count and
-        # the Clear chat button would stay a turn behind without another pass.
+                                                                                  
+                                                                              
         st.rerun()
 
 

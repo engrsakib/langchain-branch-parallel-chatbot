@@ -1,7 +1,3 @@
-"""Tests for the LCEL chain: routing, parallel fan-out and output shaping.
-
-Every model is a fake, so this suite never calls Groq.
-"""
 
 import asyncio
 from unittest.mock import MagicMock, patch
@@ -30,7 +26,6 @@ PERSONA_MARKERS = {
 
 @pytest.fixture
 def make_chain(settings, recording_router, recording_answer_llm):
-    """Build the real chain against recording fakes and hand back both."""
 
     def _make(router_reply: str = GENERAL, response: ChatBotResponse | None = None):
         router = recording_router(router_reply)
@@ -180,7 +175,7 @@ class TestStructuredOutput:
         assert answer_llm.structured_schema is ChatBotResponse
 
     def test_the_router_category_overrides_the_model_answer(self, make_chain, sample_response):
-        # The specialist claims General, but the router chose Math.
+                                                                   
         confused = sample_response.model_copy(update={"category": "General"})
         chain, _, _ = make_chain(router_reply=MATH, response=confused)
 
@@ -198,7 +193,6 @@ class TestStructuredOutput:
 
 
 class TestGetChatChain:
-    """get_chat_chain() wires real ChatGroq models, which are mocked out here."""
 
     def test_builds_both_models_from_settings(self, settings):
         with patch("app.chatbot.chain.ChatGroq") as chat_groq:
@@ -242,4 +236,4 @@ class TestGetChatChain:
             second = get_chat_chain()
 
         assert first is second
-        assert chat_groq.call_count == 2  # one answer model, one router model
+        assert chat_groq.call_count == 2                                      

@@ -1,14 +1,7 @@
-"""Routing and specialised assistant prompt templates (FR-2).
-
-Every system message here is combined with ``ChatBotResponse`` via structured
-output, so the wording reinforces the JSON schema rather than restating it.
-Literal curly braces would be read as template variables, so the only
-placeholders below are ``{query}`` and the optional ``history`` messages.
-"""
 
 from typing import Literal
 
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder   # pyright: ignore[reportMissingImports]
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder                                          
 
 Category = Literal["Programming", "Math", "General"]
 
@@ -69,7 +62,6 @@ no settled answer rather than guessing."""
 
 
 def _output_contract(category: Category) -> str:
-    """Field-by-field instructions appended to each specialist system prompt."""
     return (
         "Reply in the same language the user wrote their latest message in. If they "
         "write in Bangla, answer in Bangla; if they switch language, switch with them. "
@@ -88,7 +80,6 @@ def _output_contract(category: Category) -> str:
 
 
 def _build_assistant_prompt(category: Category, system_prompt: str) -> ChatPromptTemplate:
-    """Assemble a specialist prompt: persona, output contract, history, query."""
     return ChatPromptTemplate.from_messages(
         [
             ("system", f"{system_prompt}\n\n{_output_contract(category)}"),
@@ -101,7 +92,7 @@ def _build_assistant_prompt(category: Category, system_prompt: str) -> ChatPromp
 ROUTER_PROMPT = ChatPromptTemplate.from_messages(
     [
         ("system", ROUTER_SYSTEM_PROMPT),
-        # History lets the router classify follow-ups such as "now do it in Python".
+                                                                                    
         MessagesPlaceholder("history", optional=True),
         ("human", "{query}"),
     ]

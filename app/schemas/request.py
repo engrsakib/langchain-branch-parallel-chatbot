@@ -1,4 +1,3 @@
-"""Schemas for input arriving from the UI layer."""
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -6,7 +5,6 @@ MAX_QUERY_LENGTH = 4000
 
 
 class ChatRequest(BaseModel):
-    """A single validated user turn, before it reaches the chain."""
 
     model_config = ConfigDict(
         str_strip_whitespace=True,

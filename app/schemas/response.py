@@ -1,20 +1,13 @@
-"""Structured output schema produced by the LLM (FR-3).
-
-``ChatBotResponse`` is handed to the LLM via structured output, which means its
-class docstring and every field ``description`` are serialised into the JSON
-schema the model reads as instructions. Keep that text addressed to the model;
-notes for other developers belong here in the module docstring instead.
-"""
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class ChatBotResponse(BaseModel):
-    """A complete, structured answer to a single user question."""
 
     model_config = ConfigDict(
         str_strip_whitespace=True,
         json_schema_extra={
+            "description": "A complete, structured answer to a single user question.",
             "examples": [
                 {
                     "answer": (
@@ -66,7 +59,6 @@ class ChatBotResponse(BaseModel):
     @field_validator("keywords")
     @classmethod
     def _drop_blank_and_duplicate_keywords(cls, keywords: list[str]) -> list[str]:
-        """Deduplicate case-insensitively, preserving the order the model chose."""
         seen: set[str] = set()
         cleaned: list[str] = []
         for keyword in keywords:
